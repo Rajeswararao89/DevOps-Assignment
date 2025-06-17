@@ -1,80 +1,149 @@
-DevOps Internship Assignment
-This is a full-stack web application developed as part of a DevOps Internship Assignment. The project is structured as a
-monorepo and consists of a Python Flask-based backend and a React-based frontend using Next.js. Both services are
-containerized with Docker and orchestrated using Docker Compose.
-Project Structure
-DevOps-Assignment/
- backend/
- app.py
- Dockerfile
- frontend/
- pages/
- package.json
- Dockerfile
- docker-compose.yml
- README.md
-Technologies Used
-- Frontend: Next.js (React), JavaScript, Axios
-- Backend: Flask (Python)
-- Containerization: Docker
-- Orchestration: Docker Compose
-- Version Control: Git + GitHub
-- Platform: Ubuntu Linux (WSL or native)
-Getting Started
-1. Clone the Repository
-git clone https://github.com/Rajeswararao89/DevOps-Assignment.git
-cd DevOps-Assignment
-2. Prerequisites
-Ensure you have the following installed:
-- Docker
-- Docker Compose
-- Git
-- Node.js & npm (only if running frontend manually)
-3. Running with Docker Compose
+# DevOps Internship Assignment 🚀
+
+This is a full-stack web application developed as part of a DevOps internship assignment. The project demonstrates end-to-end implementation of a CI/CD pipeline using GitHub Actions, Docker, Terraform, and AWS ECS (Fargate). Both frontend and backend are containerized and deployed securely to the cloud.
+
+---
+
+## 📁 Project Structure
+
+.
+├── backend/ # Flask-based backend application
+├── frontend/ # Next.js-based frontend application
+├── terraform/ # Terraform configuration files for AWS resources
+├── .github/workflows/ # GitHub Actions CI/CD pipelines
+├── Dockerfile # Base Dockerfile (if needed)
+├── docker-compose.yml # Compose file for local testing
+├── ecs-cluster.tf # ECS cluster Terraform config
+├── .gitignore
+└── README.md
+
+---
+
+## 🧰 Tech Stack
+
+**Frontend**: Next.js  
+**Backend**: Python Flask  
+**Containerization**: Docker  
+**Orchestration**: AWS ECS (Fargate)  
+**Infrastructure as Code**: Terraform  
+**CI/CD**: GitHub Actions  
+**Monitoring**: AWS CloudWatch  
+**IAM**: Fine-grained roles for ECS tasks and execution
+
+---
+
+## ⚙️ CI/CD Pipeline (GitHub Actions)
+
+### Trigger: On every push to `main` branch
+
+### Backend Workflow (`backend-ci.yml`)
+- Checkout code
+- Set up Python
+- Build Docker image for backend
+- Push to AWS ECR
+- Trigger Terraform deployment
+
+### Frontend Workflow (`frontend-ci.yml`)
+- Checkout code
+- Set up Node.js
+- Build Docker image for frontend
+- Push to AWS ECR
+- Trigger Terraform deployment
+
+Each workflow has its own set of secrets configured in GitHub (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, etc.)
+
+---
+
+## 🌐 Deployment (Terraform on AWS ECS Fargate)
+
+**Deployed Components:**
+- ECS Cluster (Fargate launch type)
+- Task Definitions for frontend and backend
+- Services to run tasks
+- IAM roles (execution + task)
+- VPC, subnets, security groups (optional)
+- ALB or Public IP for service access
+
+### Terraform Directory Includes:
+- `main.tf`: Main config
+- `ecs-cluster.tf`: ECS Cluster
+- `ecs-service.tf`: ECS Service & Task
+- `iam.tf`: Roles and policies
+- `variables.tf` and `outputs.tf`
+
+---
+
+## 🧪 How to Run Locally
+
+### Prerequisites
+- Docker & Docker Compose installed
+- Python & Node.js installed
+
+### Run Using Docker Compose
+```bash
 docker-compose up --build
-Frontend: http://localhost:3000
-Backend API: http://localhost:5000/api/message
-API Endpoint
-GET /api/message
-Response:
-{ "message": "Hello from backend" }
-Frontend Features
-- Simple interface to fetch and display message from backend API.
-- Built using Next.js and Axios.
-Docker Instructions
-Build and Run Backend Separately
-cd backend
-docker build -t flask-backend .
-docker run -p 5000:5000 flask-backend
-Build and Run Frontend Separately
-cd frontend
-docker build -t nextjs-frontend .
-docker run -p 3000:3000 nextjs-frontend
-docker-compose.yml Overview
-version: '3'
-services:
- backend:
- build: ./backend
- ports:
- - "5000:5000"
- frontend:
- build: ./frontend
- ports:
- - "3000:3000"
- depends_on:
- - backend
-Notes
-- Make sure ports 3000 and 5000 are free before running the app.
-- If any port conflicts occur, modify the docker-compose.yml file accordingly.
-- For best performance, run on Ubuntu Linux or WSL.
-Future Improvements
-- Add CI/CD with GitHub Actions
-- Deploy to AWS ECS using Terraform
-- Add monitoring with AWS CloudWatch
-- Add unit and integration tests
-License
-This project is licensed under the MIT License.
-Author
-Rajeswararao
-GitHub Profile: https://github.com/Rajeswararao89
-Email: rajeswararao688@gmail.com
+Backend will be accessible at http://localhost:5000
+
+Frontend at http://localhost:3000
+
+☁️ How to Deploy on AWS
+Initialize Terraform
+
+bash
+Copy
+Edit
+cd terraform/
+terraform init
+Plan Infrastructure
+
+bash
+Copy
+Edit
+terraform plan
+Apply Infrastructure
+
+bash
+Copy
+Edit
+terraform apply
+Access Services
+
+Get ECS Service Public IP or ALB DNS from terraform output
+
+🔐 Secrets Configuration (GitHub)
+Go to:
+Repo → Settings → Secrets and Variables → Actions
+
+Add:
+
+AWS_ACCESS_KEY_ID
+
+AWS_SECRET_ACCESS_KEY
+
+AWS_REGION
+
+ECR_REPOSITORY_BACKEND
+
+ECR_REPOSITORY_FRONTEND
+
+📌 Future Enhancements
+Add unit and integration tests
+
+Use Terraform Cloud for remote state management
+
+Add automated rollback on failure
+
+Add monitoring dashboards in CloudWatch
+
+🙌 Author
+Rajeswara Rao
+DevOps Enthusiast | AWS | Terraform | CI/CD Pipelines
+
+---
+
+Let me know if you'd like me to:
+- Add badges (build passing, AWS deploy)
+- Write documentation for each GitHub Action file
+- Generate Terraform file templates
+
+Happy to continue!
