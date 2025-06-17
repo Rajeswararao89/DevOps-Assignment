@@ -110,22 +110,6 @@ Access Services
 
 Get ECS Service Public IP or ALB DNS from terraform output
 
-🔐 Secrets Configuration (GitHub)
-Go to:
-Repo → Settings → Secrets and Variables → Actions
-
-Add:
-
-AWS_ACCESS_KEY_ID
-
-AWS_SECRET_ACCESS_KEY
-
-AWS_REGION
-
-ECR_REPOSITORY_BACKEND
-
-ECR_REPOSITORY_FRONTEND
-
 📌 Future Enhancements
 Add unit and integration tests
 
